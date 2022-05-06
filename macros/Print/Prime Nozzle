@@ -1,0 +1,14 @@
+; Prime the hotend
+G92 E0 ; reset extruder 
+;G1 X240 Y297 Z0.3 F5000.0 ; move to start-line position 
+G1 X10 Y-3 F3000 ; go outside print area
+
+; wait until nozzle is at temp
+M116
+
+G1 Z0.2 F720
+G92 E0
+G1 X60 E9 F1000 ; intro line
+G1 X100 E12.5 F1000 ; intro line
+G92 E0
+M221 S95

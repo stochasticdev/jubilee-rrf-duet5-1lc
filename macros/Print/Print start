@@ -1,0 +1,37 @@
+; Clear mesh settings
+M561
+
+echo "Using tool " ^ param.C ^ " bed temp: " ^ param.B ^ ", extruder temp: " ^ param.E ^ ", filament type: " ^ param.F ^ ", nozzle: " ^ param.N
+
+; Clear PA
+M572 D0 S0 
+
+; Do not use volumetric extrusion
+M200 D0
+
+; Start heating the bed
+M140 S{param.B}
+; Prime nozzle to expected temp - 40
+;M104 S{param.E-40}
+
+; Home if needed
+G28
+
+; Wait until the bed is hot, nozzle to expected temp
+M190 S{param.B}
+
+; Perform QGL and prime nozzle. 
+G32
+
+;M98 P"0:/macros/Home "
+
+; Calculate mesh
+G29
+
+; Change tool
+M98 P"0:/macros/Print/change_tool.g" C{param.C} T{param.C} S{param.E} R{param.E-40} F{param.F} N{param.N}
+
+
+; Prime the nozzle and get ready for printing
+M98 P"0:/macros/Print/Prime Nozzle" E{param.E} B{param.B}
+
